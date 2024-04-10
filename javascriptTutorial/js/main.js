@@ -1,23 +1,27 @@
 class Pizza {
-    constructor (pizzaType, pizzaSize = "medium") {
-        this.pizzaType = pizzaType;
-        this.size = pizzaSize;
-        this.crust = "original"
+    crust = "original";
+    #sauce = "traditional";
+    #size;
+
+    constructor (pizzaSize = "medium") {
+        this.#size = pizzaSize;
     }
 
     getCrust() {
-        return this.pizzaCrust;
+        return this.crust;
     }
-
     setCrust(crust) {
         this.crust = crust; 
     }
 
-    bake() {
-        console.log(`Baking a ${this.size} ${this.pizzaType} ${this.crust} crust pizza`)
+    hereYoyGo() {
+        console.log(`Here's your ${this.crust} ${this.#sauce} sauce ${this.#size} pizza`)
     }
 }
-const myPizza = new Pizza("pepperoni", "small");
+const myPizza = new Pizza("large");
 
 myPizza.setCrust("thin");
-myPizza.bake();
+
+myPizza.hereYoyGo();
+
+console.log(myPizza.sauce);
