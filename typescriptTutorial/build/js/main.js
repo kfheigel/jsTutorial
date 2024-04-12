@@ -1,8 +1,17 @@
 "use strict";
-let userName = 'Dave';
-console.log(userName);
-let a = 12;
-let b = 6;
-let c = 2;
-console.log(a / b);
-console.log(c * b);
+let myName;
+let meaningOfLife;
+let isLoading;
+let album;
+myName = 'John';
+meaningOfLife = 42;
+isLoading = true;
+album = 1984;
+const sum = (a, b) => {
+    return a + b;
+};
+let postId;
+let isActive;
+let re = /\w+/g;
+let list = ["var", "char"];
+let thingy = { woa: "string" };
