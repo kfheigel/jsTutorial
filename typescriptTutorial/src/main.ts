@@ -1,34 +1,120 @@
-type One = string;
-type Two = string | number;
-type Three = 'hello';
+class Coder {
 
-// convert to more or less specific
-let a: One = 'hello';
-let b = a as Two;
-let c = a as Three;
+    secondLang!: string
 
-let d = <One>'world';
-let e = <string | number>'world';
-
-const addOrConcat = (a: number, b: number, c: 'add' | 'concat'): number|string => {
-    if (c === 'add') return a + b
-    return '' + a + b;
+    constructor(
+        public readonly name: string, 
+        public music: string, 
+        private age: number, 
+        protected lang: string = 'Typescript'
+    ) {
+        this.name = name
+        this.music = music
+        this.age = age
+        this.lang = lang
+    }
+    public getAge() {
+        return `Hello, I'm ${this.age}`
+    }
 }
 
-let myVal: string = addOrConcat(2,2, 'concat') as string;
+const Dave = new Coder('Dave', 'Rock', 42)
 
-//be careful TS sees no problem but it returns string
-let nextVal: number = addOrConcat(2,2, 'concat') as number;
-console.log(typeof nextVal); // shows string
+// console.log(Dave.age)
+console.log(Dave.getAge())
 
-// 10 as string
-(10 as unknown) as string;
+class WebDev extends Coder {
+    constructor(
+        public computer:string,
+        name: string, 
+        music: string, 
+        age: number, 
+    ) {
+        super(name, music, age)
+        this.computer = computer
+    }
 
-// The DOM
+    public getLang() {
+        return `I write in ${this.lang}`
+    }
+}
+const Sara = new WebDev('Mac', 'Sara', 'Lofi', 23)
+console.log(Sara.getLang());
+// console.log(Sara.lang);
+/////////////////////////////////////////////////////////////
 
-const img = document.querySelector('img') as HTMLImageElement;
-const myImg = document.getElementById('#img') as HTMLImageElement;
-const nextImg = <HTMLImageElement>document.getElementById('#img');
+interface Musician {
+    name: string,
+    instrument: string,
+    play(action: string): string
+}
 
-img.src
-myImg.src
+class Guitarist implements Musician {
+    name: string
+    instrument: string
+    constructor(
+        name: string, 
+        instrument: string
+    ) {
+        this.name = name
+        this.instrument = instrument
+    }
+
+    play(action: string): string {
+        return `${this.name} ${action} the ${this.instrument}`
+    }
+}
+
+const Page = new Guitarist('Jimmy', 'guitar')
+console.log(Page.play('strums'));
+////////////////////////////////////////////////////////
+
+class Peeps {
+    static count: number = 0
+    static getCount():number {
+        return Peeps.count
+    }
+    public id: number
+    constructor(public name: string) {
+        this.name = name
+        this.id = ++Peeps.count
+    }
+}
+
+const John = new Peeps('John')
+const Steve = new Peeps('Steve')
+const Amy = new Peeps('Amy')
+
+console.log(Steve.id)
+console.log(Amy.id)
+console.log(John.id)
+console.log(Peeps.count)
+//////////////////////////////////////////
+
+class Bands {
+    private dataState: string[]
+
+    constructor() {
+        this.dataState = []
+    }
+
+    public get data(): string[] {
+        return this.dataState
+    }
+
+    public set data(band: string[]) {
+        if (Array.isArray(band) && band.every(el => typeof el === 'string')){
+            this.dataState = band
+            return
+        } else throw new Error('Param is not an array of strings')
+    }
+}
+
+const MyBands = new Bands()
+MyBands.data = ['Neil Young', 'Led Zeppelin']
+console.log(MyBands.data)
+
+MyBands.data = [...MyBands.data, 'Zztop']
+console.log(MyBands.data)
+MyBands.data = ['Van Halen', 5051];
+console.log(MyBands.data)
